@@ -21,11 +21,18 @@ while True:
         time.sleep(2)
         break
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, 1.1, 2)
+    faces = face_cascade.detectMultiScale(gray, 1.1, 5)
 
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
         face = gray[y:y+h, x:x+w]
         face = cv2.resize(face, (200, 200))
         cv2.imshow("Face", face)
+
     cv2.imshow("Camera", frame)
+
+    if cv2.waitKey(0) and 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
